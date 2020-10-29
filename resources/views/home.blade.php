@@ -16,7 +16,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            @if(!empty($posts))
+            @if(!$posts->isEmpty())
             @foreach($posts as $post)
             <div class="post-preview">
                 <a href="{{ route('view_post', [$post->id, $post->url]) }}">
@@ -28,11 +28,15 @@
             </div>
             <hr>
             @endforeach
+            @else
+            <p class="text-center">Posts not found</p>
             @endif
+            @if(!$posts->isEmpty())
             <!-- Pager -->
             <div class="clearfix">
                 <a class="btn btn-primary float-right" href="{{ route('posts') }}">View All Posts &rarr;</a>
             </div>
+            @endif
         </div>
     </div>
 </div>

@@ -36,8 +36,8 @@
     </div>
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto text-center">
-            <p>Already have account? <router-link to="/signin" style="color: #3490dc !important;">Sign in</router-link></p>
-            <p>Don't have account? <router-link to="/signup" style="color: #3490dc !important;">Sign up</router-link></p>
+            <p>Already have account? <a href="/login" style="color: #3490dc !important;">Login</a></p>
+            <p>Don't have account? <a href="/register" style="color: #3490dc !important;">Register here</a></p>
         </div>
     </div>
 </div>

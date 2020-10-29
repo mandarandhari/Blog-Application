@@ -208,6 +208,10 @@ class PostController extends Controller
 
             if ($post) {
                 if ($post->delete()) {
+                    if (file_exists(public_path('storage/banner_images/' . $id . '/' . $post->banner_image))) {
+                        unlink(public_path('storage/banner_images/' . $id . '/' . $post->banner_image));
+                    }
+
                     $notification = [
                         'status' => 'success',
                         'message' => 'Post deleted'

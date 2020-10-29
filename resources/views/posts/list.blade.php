@@ -40,8 +40,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            @if(!empty($posts))
-            @foreach($posts as $post)
+            @forelse($posts as $post)
             <div class="post-preview">
                 <a href="{{ route('view_post', [$post->id, $post->url]) }}">
                     <span class="category-box" style="background:{{ $post->category->color_code }};">{{ $post->category->category_name }}</span>
@@ -50,10 +49,10 @@
                 </a>
                 <div class="row">
                     <div class="col-md-8">
-                        <p class="post-meta">Posted by {{ $post->user_id === Auth::user()->id ? 'you' : $post->user->name }} on {{ date('F d, Y', strtotime($post->created_at)) }}</p>
+                        <p class="post-meta">Posted by {{ Auth::check() && $post->user_id === Auth::user()->id ? 'you' : $post->user->name }} on {{ date('F d, Y', strtotime($post->created_at)) }}</p>
                     </div>
                     <div class="col-md-4 pt-3">
-                        @if($post->user_id === Auth::user()->id && Request::segment(1) === 'my-posts')
+                        @if(Auth::check() && $post->user_id === Auth::user()->id && Request::segment(1) === 'my-posts')
                         <a href="{{ route('edit_post', [$post->id]) }}" class="btn btn-sm btn-primary">Edit</a>
                         <button class="btn btn-sm btn-danger delete-post-btn" data-href="{{ route('delete_post', [$post->id]) }}" data-target="#deletePostModal" data-toggle="modal">Delete</button>
                         @endif
@@ -61,13 +60,16 @@
                 </div>                
             </div>
             <hr>
-            @endforeach
-            @else
+            @empty
             <p class="text-center">Posts not found</p>
-            @endif
+            @endforelse
             <!-- Pager -->
             <div class="float-right">
-                {{ $posts->onEachSide(1)->links() }}
+                @if(Request::query('category') !== '')
+                {{ $posts->appends(['category' => Request::query('category')])->links() }}
+                @else
+                {{ $posts->links() }}
+                @endif
             </div>
         </div>
     </div>

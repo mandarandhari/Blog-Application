@@ -17,7 +17,8 @@
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
             <form name="resetPassword" id="resetPasswordForm" method="POST" action="{{ route('password.update') }}">
-                @csrf    
+                @csrf
+                <input type="hidden" name="token" value="{{ $token }}">    
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                         <label>Email</label>
